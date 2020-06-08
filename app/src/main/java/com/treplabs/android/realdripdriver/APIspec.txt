@@ -1,0 +1,9 @@
+
+The device should update the the the backend for terminated & ended.
+
+
+
+
+// Hope device id === device label
+//POSSIBLE Improvements.. Include terminated treatments.
+//POSSIBLE Improvements.. Stop treatments from phone.

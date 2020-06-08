@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RealDripDriver</string>
+    <string name="default_loading_message">Loading, Please wait . . .</string>
+    <string name="ok">OK</string>
+    <string name="logging_in">Logging in, Please wait...</string>
+    <!-- Content Descriptions -->
+</resources>

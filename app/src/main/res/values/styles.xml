@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="AppTheme" parent="AppThemeParent">
+        <item name="android:windowBackground">@color/colorPrimary_lightTheme</item>
+        <item name="android:statusBarColor">#0D050000</item>
+    </style>
+
+    <style name="AppTheme.HorizontalButtonAppearance" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="android:fontFamily">@font/muli_bold</item>
+        <item name="fontFamily">@font/muli_bold</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:layout_marginStart">30dp</item>
+        <item name="android:layout_marginEnd">30dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">@color/colorAccent</item>
+    </style>
+
+
+</resources>

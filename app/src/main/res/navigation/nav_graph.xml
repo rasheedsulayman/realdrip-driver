@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools1="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        tools1:layout="@layout/fragment_lnfusion_details"
+        android:id="@+id/loginFragment"
+        android:name="com.treplabs.android.realdripdriver.realdripapp.screens.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_treatmentsFragment"
+            app:destination="@id/treatmentsFragment" />
+    </fragment>
+
+    <fragment
+        tools1:layout="@layout/fragment_device_details"
+        android:id="@+id/manageTreatmentFragment"
+        android:name="com.treplabs.android.realdripdriver.realdripapp.screens.createtreatment.ManageTreatmentFragment"
+        android:label="ManageTreatmentFragment" >
+        <argument
+            android:name="infusion"
+            app:argType="com.treplabs.android.realdrip.realdripapp.data.models.response.Infusion"
+            app:nullable="true" />
+        <action
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/nav_graph"
+            android:id="@+id/action_manageTreatmentFragment_to_treatmentsFragment"
+            app:destination="@id/treatmentsFragment" />
+    </fragment>
+
+
+</navigation>
