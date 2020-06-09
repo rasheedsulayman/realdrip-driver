@@ -17,6 +17,8 @@ object Constants {
     object FireStorePaths {
         const val DEVICES = "devices"
         const val USERS = "users"
+        const val SETTINGS = "settings"
+        const val NOTIFICATION_TOKEN = "notificationToken"
     }
 
     object ImageUpload {

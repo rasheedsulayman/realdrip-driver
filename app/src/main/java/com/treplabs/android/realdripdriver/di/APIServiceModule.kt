@@ -4,9 +4,9 @@ import com.treplabs.android.realdripdriver.BuildConfig
 import com.treplabs.android.realdripdriver.auth.AccessTokenAuthenticator
 import com.treplabs.android.realdripdriver.auth.AccessTokenInterceptor
 import com.treplabs.android.realdripdriver.auth.AccessTokenProvider
-import com.treplabs.android.realdripdriver.realdripapp.accesstoken.AccessTokenProviderImpl
-import com.treplabs.android.realdripdriver.realdripapp.apis.RealDripAPIAuthService
-import com.treplabs.android.realdripdriver.realdripapp.apis.RealDripApiService
+import com.treplabs.android.realdripdriver.realdripdriverapp.accesstoken.AccessTokenProviderImpl
+import com.treplabs.android.realdripdriver.realdripdriverapp.apis.RealDripAPIAuthService
+import com.treplabs.android.realdripdriver.realdripdriverapp.apis.RealDripApiService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Lazy

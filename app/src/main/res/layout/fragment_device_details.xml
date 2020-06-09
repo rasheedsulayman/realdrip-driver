@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.treplabs.android.realdripdriver.realdripapp.screens.createtreatment.ManageTreatmentViewModel" />
+            type="com.treplabs.android.realdripdriver.realdripdriverapp.screens.devicedetails.DeviceDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

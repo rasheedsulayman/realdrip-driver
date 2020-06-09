@@ -1,7 +1,7 @@
 package com.treplabs.android.realdripdriver.utils
 
-import com.treplabs.android.realdripdriver.realdripapp.data.models.request.AuthRequest
-import com.treplabs.android.realdripdriver.realdripapp.data.models.response.Nurse
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.request.AuthRequest
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.response.Nurse
 import javax.inject.Inject
 
 class PrefsValueHelper @Inject constructor(private val prefsUtils: PrefsUtils) {

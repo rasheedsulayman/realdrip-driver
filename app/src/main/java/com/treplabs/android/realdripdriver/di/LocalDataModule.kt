@@ -6,10 +6,10 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.treplabs.android.realdripdriver.utils.PrefsUtils
 import com.google.gson.Gson
-import com.treplabs.android.realdripdriver.realdripapp.apis.RealDripApiService
-import com.treplabs.android.realdripdriver.realdripapp.data.store.InfusionDatabase
-import com.treplabs.android.realdripdriver.realdripapp.data.repositories.InfusionRepository
-import com.treplabs.android.realdripdriver.realdripapp.data.repositories.InfusionRepositoryImpl
+import com.treplabs.android.realdripdriver.realdripdriverapp.apis.RealDripApiService
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.store.InfusionDatabase
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.repositories.InfusionRepository
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.repositories.InfusionRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

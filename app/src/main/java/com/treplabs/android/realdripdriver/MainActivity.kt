@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var currentFragment: BaseFragment
 
-    private val rootNavFragments = hashSetOf(R.id.treatmentsFragment, R.id.profileFragment)
+    private val rootNavFragments = hashSetOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,8 +1,8 @@
 package com.treplabs.android.realdripdriver.di
 
 import android.app.Application
-import com.treplabs.android.realdripdriver.realdripapp.screens.createtreatment.ManageTreatmentFragment
-import com.treplabs.android.realdripdriver.realdripapp.screens.login.LoginFragment
+import com.treplabs.android.realdripdriver.realdripdriverapp.screens.infusiondetails.InfusionDetailsFragment
+import com.treplabs.android.realdripdriver.realdripdriverapp.screens.devicedetails.DeviceDetailsFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -11,8 +11,8 @@ import javax.inject.Singleton
 @Component(modules = [APIServiceModule::class, ViewModelModule::class])
 interface AppComponent {
 
-    fun inject(target: LoginFragment)
-    fun inject(target: ManageTreatmentFragment)
+    fun inject(target: DeviceDetailsFragment)
+    fun inject(target: InfusionDetailsFragment)
 
     @Component.Builder
     interface Builder {
