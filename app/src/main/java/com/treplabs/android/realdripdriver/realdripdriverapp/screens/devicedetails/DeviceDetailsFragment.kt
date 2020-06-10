@@ -51,13 +51,16 @@ class DeviceDetailsFragment : BaseViewModelFragment() {
             ) return@setOnClickListener
             viewModel.setInfusion(
                 binding.deviceIdEditText.stringContent(),
+                binding.infusionIdEditText.stringContent(),
                 binding.volumeToDispenseEditText.stringContent()
             )
         }
 
         viewModel.navigateInfusionDetails.observe(this, EventObserver {
             findNavController().navigate(
-                DeviceDetailsFragmentDirections.actionDeviceDetailsFragmentToInfusionDetailsFragment(it)
+                DeviceDetailsFragmentDirections.actionDeviceDetailsFragmentToInfusionDetailsFragment(
+                    it
+                )
             )
         })
     }
@@ -66,5 +69,8 @@ class DeviceDetailsFragment : BaseViewModelFragment() {
 }
 
 @Parcelize
-data class InfusionDetails(val deviceId: String, val realtimeInfusion: RealtimeInfusion) :
-    Parcelable
+data class InfusionDetails(
+    val deviceId: String,
+    val infusionId: String,
+    val realtimeInfusion: RealtimeInfusion
+) : Parcelable

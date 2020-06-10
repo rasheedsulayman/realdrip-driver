@@ -9,13 +9,27 @@ data class NotificationPayload(
     var data: NotificationData
 )
 
-
 data class NotificationData(
     @SerializedName("deviceId")
-    var deviceId: String,
+    val deviceId: String,
+    @SerializedName("infusionId")
+    val infusionId: String,
     @SerializedName("message")
-    var message: String
-)
+    val message: String,
+    @SerializedName("title")
+    val title: String
+) {
+    companion object {
+        fun from(map: MutableMap<String, String>) = NotificationData(
+            map["deviceId"]!!,
+            map["infusionId"]!!,
+            map["message"]!!,
+            map["title"]!!
+        )
+    }
+}
+
+
 
 data class NotificationResponse(
     @SerializedName("success")

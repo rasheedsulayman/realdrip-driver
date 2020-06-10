@@ -91,10 +91,7 @@ class InfusionDetailsViewModel @Inject constructor(
         }
     }
 
-
-    private suspend fun sendNotification(token: String, dripDeviceId: String, message: String) {
-        val notificationPayload =
-            NotificationPayload(token, NotificationData(dripDeviceId, message))
+    private suspend fun sendNotification(notificationPayload: NotificationPayload) {
         when (val result = notificationRepository.sendNotification(notificationPayload)) {
             is Result.Success -> {
                 _sendNotification.value = Event(result.data.isSuccessFull())
@@ -105,16 +102,23 @@ class InfusionDetailsViewModel @Inject constructor(
         }
     }
 
-    fun sendNotification(deviceId: String) {
+    fun sendNotification(infusionId: String, deviceId: String) {
         val currentInfusion = _realtimeInfusion.value!!
+        val title = "Infusion Alert"
         val message = """
             Hello, The content of the infusion with label $deviceId is ${currentInfusion.volumeGivenPercent}% 
             done. Click the notification to see more. 
         """.trimIndent()
+        NotificationData(deviceId, infusionId, message, title)
         viewModelScope.launch {
             when (val result = firebaseRepository.getNotificationToken()) {
                 is Result.Success -> {
-                    sendNotification(result.data, deviceId,  message)
+                    sendNotification(
+                        NotificationPayload(
+                            result.data,
+                            NotificationData(deviceId, infusionId, message, title)
+                        )
+                    )
                 }
                 is Result.Error -> {
                     Timber.d("Error ☹️: ${result.errorMessage}")

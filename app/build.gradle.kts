@@ -77,13 +77,14 @@ android {
         properties.load(rootProject.file("local.properties").inputStream())
         val fbDbSecrete = properties.getProperty("FB_DB_SECRETE")
         val webIdToken = properties.getProperty("FB_AUTH_WEB_ID_TOKEN")
-
+        val notificationAuthToken =  properties.getProperty("NOTIFICATION_AUTH_TOKEN")
         create("production") {
             buildConfigField("String", "API_BASE_URL", "\"https://API-creds\"")
             buildConfigField("String", "OAUTH_CLIENT_ID", "\"API-creds\"")
             buildConfigField("String", "OAUTH_CLIENT_SECRET", "\"API-creds\"")
             buildConfigField("String", "OAUTH_GRANT_TYPE", "\"API-creds\"")
-            setDimension("implementation")
+            buildConfigField("String", "NOTIFICATION_AUTH_TOKEN", "\"$notificationAuthToken\"")
+            dimension = "implementation"
             versionNameSuffix = "-production"
         }
         create("staging") {
@@ -95,7 +96,8 @@ android {
             buildConfigField("String", "OAUTH_CLIENT_ID", "\"API\"")
             buildConfigField("String", "OAUTH_CLIENT_SECRET", "\"API\"")
             buildConfigField("String", "OAUTH_GRANT_TYPE", "\"API\"")
-            setDimension("implementation")
+            buildConfigField("String", "NOTIFICATION_AUTH_TOKEN", "\"$notificationAuthToken\"")
+            dimension = "implementation"
             versionNameSuffix = "-staging"
         }
     }

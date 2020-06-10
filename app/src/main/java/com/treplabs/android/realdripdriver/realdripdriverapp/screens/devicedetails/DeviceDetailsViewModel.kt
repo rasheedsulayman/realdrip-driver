@@ -24,13 +24,14 @@ class DeviceDetailsViewModel @Inject constructor(
     val navigateInfusionDetails: LiveData<Event<InfusionDetails>>
         get() = _navigateInfusionDetails
 
-    fun setInfusion(deviceId: String, volumeToDispense: String) {
+    fun setInfusion(deviceId: String, infusionId: String, volumeToDispense: String) {
         _loadingStatus.value = LoadingStatus.Loading("Initializing Infusion, Please wait...")
         viewModelScope.launch {
             val realtimeInfusion = InfusionDataHelper.getStockInfusion(volumeToDispense)
             when (val result = firebaseRepository.setInfusion(deviceId, realtimeInfusion)) {
                 is Result.Success -> {
-                    _navigateInfusionDetails.value = Event(InfusionDetails(deviceId, realtimeInfusion))
+                    _navigateInfusionDetails.value =
+                        Event(InfusionDetails(deviceId, infusionId, realtimeInfusion))
                     _loadingStatus.value = LoadingStatus.Success
                 }
                 is Result.Error -> _loadingStatus.value =

@@ -12,6 +12,7 @@ object Constants {
         const val HOSPITAL_ID = "hospitalId"
         const val DEVICE_ID = "deviceId"
         const val NURSE_ID = "nurseId"
+
     }
 
     object FireStorePaths {

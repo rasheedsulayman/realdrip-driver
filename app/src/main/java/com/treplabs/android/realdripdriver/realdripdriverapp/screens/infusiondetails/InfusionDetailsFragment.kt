@@ -37,7 +37,7 @@ class InfusionDetailsFragment : BaseViewModelFragment() {
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(InfusionDetailsViewModel::class.java)
         binding.viewModel = viewModel
-        val infusionDetails  = InfusionDetailsFragmentArgs.fromBundle(arguments!!).infusionDetails
+        val infusionDetails = InfusionDetailsFragmentArgs.fromBundle(arguments!!).infusionDetails
         viewModel.restartSimulation(infusionDetails)
 
         binding.resetButton.setOnClickListener {
@@ -45,7 +45,7 @@ class InfusionDetailsFragment : BaseViewModelFragment() {
         }
 
         binding.sendNotificationButton.setOnClickListener {
-            viewModel.sendNotification(infusionDetails.deviceId)
+            viewModel.sendNotification(infusionDetails.infusionId, infusionDetails.deviceId)
         }
 
         binding.stopButton.setOnClickListener {
