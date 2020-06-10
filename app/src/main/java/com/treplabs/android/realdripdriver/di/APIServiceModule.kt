@@ -6,7 +6,7 @@ import com.treplabs.android.realdripdriver.auth.AccessTokenInterceptor
 import com.treplabs.android.realdripdriver.auth.AccessTokenProvider
 import com.treplabs.android.realdripdriver.realdripdriverapp.accesstoken.AccessTokenProviderImpl
 import com.treplabs.android.realdripdriver.realdripdriverapp.apis.RealDripAPIAuthService
-import com.treplabs.android.realdripdriver.realdripdriverapp.apis.RealDripApiService
+import com.treplabs.android.realdripdriver.realdripdriverapp.apis.NotificationService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Lazy
@@ -54,13 +54,28 @@ class APIServiceModule {
     fun provideRealDripAPIService(
         @Named("RealDripAPIService") client: Lazy<OkHttpClient>,
         gson: Gson
-    ): RealDripApiService {
+    ): NotificationService {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_BASE_URL)
             .client(client.get())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-            .create(RealDripApiService::class.java)
+            .create(NotificationService::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideNotificationService(
+        client: Lazy<OkHttpClient>,
+        gson: Gson
+    ): NotificationService {
+        return Retrofit.Builder()
+            .baseUrl("https://fcm.googleapis.com/")
+            .client(client.get())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(NotificationService::class.java)
     }
 
     @Provides

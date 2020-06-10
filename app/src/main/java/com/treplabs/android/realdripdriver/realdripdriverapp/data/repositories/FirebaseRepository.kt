@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import com.treplabs.android.realdripdriver.networkutils.Result
 
-class FirestoreRepository @Inject constructor(
+class FirebaseRepository @Inject constructor(
     private val firestoreDataSource: FirestoreDataSource
 ) {
 
@@ -33,7 +33,6 @@ class FirestoreRepository @Inject constructor(
             Result.Error(GENERIC_ERROR_CODE, e.message ?: GENERIC_ERROR_MESSAGE)
         }
     }
-
 
     suspend fun getNotificationToken(): Result<String> {
         return try {

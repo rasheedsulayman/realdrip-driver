@@ -6,7 +6,6 @@ import com.treplabs.android.realdripdriver.networkutils.Result
 import com.treplabs.android.realdripdriver.networkutils.getAPIResult
 import com.treplabs.android.realdripdriver.realdripdriverapp.apis.RealDripAPIAuthService
 import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.request.AuthRequest
-import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.response.AuthResponse
 import com.treplabs.android.realdripdriver.utils.PrefsValueHelper
 import timber.log.Timber
 import javax.inject.Inject

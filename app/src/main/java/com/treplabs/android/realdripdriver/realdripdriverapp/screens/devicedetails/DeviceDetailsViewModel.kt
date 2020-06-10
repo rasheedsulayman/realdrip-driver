@@ -3,14 +3,11 @@ package com.treplabs.android.realdripdriver.realdripdriverapp.screens.devicedeta
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.treplabs.android.realdripdriver.Constants
-import com.treplabs.android.realdripdriver.R
 import com.treplabs.android.realdripdriver.base.BaseViewModel
 import com.treplabs.android.realdripdriver.networkutils.Event
 import com.treplabs.android.realdripdriver.networkutils.LoadingStatus
 import com.treplabs.android.realdripdriver.networkutils.Result
-import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.request.AuthRequest
-import com.treplabs.android.realdripdriver.realdripdriverapp.data.repositories.OauthRepository
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.repositories.FirebaseRepository
 import com.treplabs.android.realdripdriver.utils.PrefsValueHelper
 import com.treplabs.android.realdripdriver.utils.ResourceProvider
 import kotlinx.coroutines.launch
@@ -18,31 +15,27 @@ import javax.inject.Inject
 
 class DeviceDetailsViewModel @Inject constructor(
     private val prefsValueHelper: PrefsValueHelper,
-    private val oauthRepository: OauthRepository,
+    private val firebaseRepository: FirebaseRepository,
     private val resourceProvider: ResourceProvider
 ) : BaseViewModel() {
 
-    private val _navigateDashBoard = MutableLiveData(Event(false))
+    private val _navigateInfusionDetails = MutableLiveData<Event<InfusionDetails>>()
 
-    val navigateDashBoard: LiveData<Event<Boolean>>
-        get() = _navigateDashBoard
+    val navigateInfusionDetails: LiveData<Event<InfusionDetails>>
+        get() = _navigateInfusionDetails
 
-    fun logIn(email: String, password: String) {
-        val authRequest = AuthRequest(email, password, Constants.APIDataKeys.NURSE)
-        _loadingStatus.value =
-            LoadingStatus.Loading(resourceProvider.getString(R.string.logging_in))
+    fun setInfusion(deviceId: String, volumeToDispense: String) {
+        _loadingStatus.value = LoadingStatus.Loading("Initializing Infusion, Please wait...")
         viewModelScope.launch {
-            when (val result = oauthRepository.login(authRequest)) {
+            val realtimeInfusion = InfusionDataHelper.getStockInfusion(volumeToDispense)
+            when (val result = firebaseRepository.setInfusion(deviceId, realtimeInfusion)) {
                 is Result.Success -> {
-                    prefsValueHelper.saveAuthRequest(authRequest)
-                    prefsValueHelper.saveLoggedInUser(result.data.nurse)
+                    _navigateInfusionDetails.value = Event(InfusionDetails(deviceId, realtimeInfusion))
                     _loadingStatus.value = LoadingStatus.Success
-                    _navigateDashBoard.value = Event(true)
                 }
                 is Result.Error -> _loadingStatus.value =
                     LoadingStatus.Error(result.errorCode, result.errorMessage)
             }
         }
     }
-
 }

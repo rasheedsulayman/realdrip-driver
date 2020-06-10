@@ -32,14 +32,27 @@ class InfusionDetailsFragment : BaseViewModelFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpToolbar()
         daggerAppComponent.inject(this)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(InfusionDetailsViewModel::class.java)
         binding.viewModel = viewModel
         val infusionDetails  = InfusionDetailsFragmentArgs.fromBundle(arguments!!).infusionDetails
-        setUpToolbar()
+        viewModel.restartSimulation(infusionDetails)
 
+        binding.resetButton.setOnClickListener {
+            viewModel.resetInfusion(infusionDetails)
+        }
+
+        binding.sendNotificationButton.setOnClickListener {
+            viewModel.sendNotification(infusionDetails.deviceId)
+        }
+
+        binding.stopButton.setOnClickListener {
+            viewModel.stopSimulation()
+        }
     }
+
 
     private fun setUpToolbar() = mainActivity.run {
         setUpToolBar("InfusionDump", false)

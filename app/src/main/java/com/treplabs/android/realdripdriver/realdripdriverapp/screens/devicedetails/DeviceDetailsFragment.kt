@@ -13,6 +13,8 @@ import com.treplabs.android.realdripdriver.base.BaseViewModelFragment
 import com.treplabs.android.realdripdriver.databinding.FragmentDeviceDetailsBinding
 import com.treplabs.android.realdripdriver.extensions.stringContent
 import com.treplabs.android.realdripdriver.extensions.validateTextLayouts
+import com.treplabs.android.realdripdriver.networkutils.EventObserver
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.response.RealtimeInfusion
 import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
@@ -40,26 +42,29 @@ class DeviceDetailsFragment : BaseViewModelFragment() {
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(DeviceDetailsViewModel::class.java)
         binding.viewModel = viewModel
-        mainActivity.setUpToolBar("Device Details", true)
+        mainActivity.setUpToolBar("", true)
         binding.continueButton.setOnClickListener {
             if (!validateTextLayouts(
                     binding.deviceIdEditText,
                     binding.volumeToDispenseEditText
                 )
             ) return@setOnClickListener
-            val infusionDetails = InfusionDetails(
+            viewModel.setInfusion(
                 binding.deviceIdEditText.stringContent(),
                 binding.volumeToDispenseEditText.stringContent()
             )
-            findNavController().navigate(
-                DeviceDetailsFragmentDirections
-                    .actionDeviceDetailsFragmentToInfusionDetailsFragment(infusionDetails)
-            )
         }
+
+        viewModel.navigateInfusionDetails.observe(this, EventObserver {
+            findNavController().navigate(
+                DeviceDetailsFragmentDirections.actionDeviceDetailsFragmentToInfusionDetailsFragment(it)
+            )
+        })
     }
 
     override fun getViewModel(): BaseViewModel = viewModel
 }
 
 @Parcelize
-data class InfusionDetails(val deviceId: String, val volumeToDispense: String) : Parcelable
+data class InfusionDetails(val deviceId: String, val realtimeInfusion: RealtimeInfusion) :
+    Parcelable

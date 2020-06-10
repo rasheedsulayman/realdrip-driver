@@ -7,7 +7,7 @@ data class RealtimeInfusion(
     val batteryDuration: String? = null,
     val control: String? = null,
     val flowRate: String? = null,
-    val onOperation: String? = null,
+    val onOperation: Boolean? = null,
     val timeRemaining: String? = null, //Milliseconds
     val volumeGiven: String? = null,  // Ml
     val volumeGivenPercent: String? = null, // Percentage

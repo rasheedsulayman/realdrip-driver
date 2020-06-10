@@ -2,7 +2,6 @@ package com.treplabs.android.realdripdriver.realdripdriverapp.apis
 
 import com.treplabs.android.realdripdriver.networkutils.BaseAPIResponse
 import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.request.AuthRequest
-import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.response.AuthResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
