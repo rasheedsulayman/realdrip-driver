@@ -39,8 +39,8 @@ class InfusionDetailsFragment : BaseViewModelFragment() {
         binding.viewModel = viewModel
         val infusionDetails = InfusionDetailsFragmentArgs.fromBundle(arguments!!).infusionDetails
         viewModel.restartSimulation(infusionDetails)
-
-        binding.resetButton.setOnClickListener {
+        viewModel.subscribeToRealTimeInfusion(infusionDetails)
+        binding.restartButton.setOnClickListener {
             viewModel.resetInfusion(infusionDetails)
         }
 

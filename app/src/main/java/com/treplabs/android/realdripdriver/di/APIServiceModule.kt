@@ -1,14 +1,9 @@
 package com.treplabs.android.realdripdriver.di
 
-import com.treplabs.android.realdripdriver.BuildConfig
-import com.treplabs.android.realdripdriver.auth.AccessTokenAuthenticator
-import com.treplabs.android.realdripdriver.auth.AccessTokenInterceptor
-import com.treplabs.android.realdripdriver.auth.AccessTokenProvider
-import com.treplabs.android.realdripdriver.realdripdriverapp.accesstoken.AccessTokenProviderImpl
-import com.treplabs.android.realdripdriver.realdripdriverapp.apis.RealDripAPIAuthService
-import com.treplabs.android.realdripdriver.realdripdriverapp.apis.NotificationService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.treplabs.android.realdripdriver.BuildConfig
+import com.treplabs.android.realdripdriver.realdripdriverapp.apis.NotificationService
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
@@ -16,52 +11,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module(includes = [LocalDataModule::class])
 class APIServiceModule {
-
-    @Provides
-    @Named("RealDripAPIService")
-    @Singleton
-    fun provideRealDripServiceHttpClient(
-        upstream: OkHttpClient,
-        @Named("RealDripAPIService") accessTokenProvider: AccessTokenProvider
-    ): OkHttpClient {
-        return upstream.newBuilder()
-            .addInterceptor(AccessTokenInterceptor(accessTokenProvider))
-            .authenticator(AccessTokenAuthenticator(accessTokenProvider))
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRealDripAPIAuthService(
-        client: Lazy<OkHttpClient>,
-        gson: Gson
-    ): RealDripAPIAuthService {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.API_BASE_URL)
-            .client(client.get())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(RealDripAPIAuthService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRealDripAPIService(
-        @Named("RealDripAPIService") client: Lazy<OkHttpClient>,
-        gson: Gson
-    ): NotificationService {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.API_BASE_URL)
-            .client(client.get())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(NotificationService::class.java)
-    }
 
 
     @Provides
@@ -78,10 +31,6 @@ class APIServiceModule {
             .create(NotificationService::class.java)
     }
 
-    @Provides
-    @Named("RealDripAPIService")
-    fun provideAccessTokenProvider(accessTokenProvider: AccessTokenProviderImpl): AccessTokenProvider =
-        accessTokenProvider
 
     @Provides
     @Singleton

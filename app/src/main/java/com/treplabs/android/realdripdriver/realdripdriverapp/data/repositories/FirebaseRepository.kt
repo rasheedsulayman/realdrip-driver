@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import com.treplabs.android.realdripdriver.networkutils.Result
+import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.notifications.NotificationToken
 
 class FirebaseRepository @Inject constructor(
     private val firestoreDataSource: FirestoreDataSource
@@ -34,7 +35,7 @@ class FirebaseRepository @Inject constructor(
         }
     }
 
-    suspend fun getNotificationToken(): Result<String> {
+    suspend fun getNotificationToken(): Result<NotificationToken> {
         return try {
             val tokenReference = Firebase.firestore.collection(FireStorePaths.SETTINGS)
                 .document(FireStorePaths.NOTIFICATION_TOKEN)

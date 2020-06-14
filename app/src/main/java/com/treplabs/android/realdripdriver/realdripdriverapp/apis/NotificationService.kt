@@ -12,7 +12,7 @@ interface NotificationService {
 
 
     @POST("/fcm/send")
-    @Headers("Authorization: ${BuildConfig.NOTIFICATION_AUTH_TOKEN}")
+    @Headers("Authorization:key=${BuildConfig.NOTIFICATION_AUTH_TOKEN}")
     suspend fun sendNotification(
         @Body notificationPayload: NotificationPayload): Response<NotificationResponse>
 }

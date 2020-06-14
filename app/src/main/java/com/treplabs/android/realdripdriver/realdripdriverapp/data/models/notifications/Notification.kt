@@ -29,6 +29,7 @@ data class NotificationData(
     }
 }
 
+data class NotificationToken(@SerializedName("deviceId") val token: String? = null)
 
 
 data class NotificationResponse(

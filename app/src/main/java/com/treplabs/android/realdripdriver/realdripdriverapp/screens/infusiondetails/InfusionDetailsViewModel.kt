@@ -1,7 +1,9 @@
 package com.treplabs.android.realdripdriver.realdripdriverapp.screens.infusiondetails
 
+import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.treplabs.android.realdripdriver.base.BaseViewModel
 import com.treplabs.android.realdripdriver.networkutils.Result
@@ -33,6 +35,8 @@ class InfusionDetailsViewModel @Inject constructor(
     val realtimeInfusion: LiveData<RealtimeInfusion>
         get() = _realtimeInfusion
 
+    val infusionDump = Transformations.map(_realtimeInfusion){ it.toString() }
+
     private val _sendNotification = MutableLiveData<Event<Boolean>>()
     val sendNotification: LiveData<Event<Boolean>>
         get() = _sendNotification
@@ -52,18 +56,17 @@ class InfusionDetailsViewModel @Inject constructor(
             val totalTimeToSpend =
                 ((volumeToDispense / infusion.flowRate.toFloat()) * 60 * 60 * 1000).toLong()
             var timeSpent = 0L
-            var batteryPercentage = 100
+            var batteryPercentage: Int
             while (volumeDispensed < volumeToDispense) {
-                val ONE_MILISS = 1000L
-                delay(ONE_MILISS)
-                volumeDispensed += milPerSec
-                val volumeLeft = (volumeToDispense - volumeDispensed)
-                timeSpent += ONE_MILISS
+                val ONE_SECOND = 1000L
+                delay(ONE_SECOND)
+                volumeDispensed += (milPerSec)
+                val volumeLeft = (volumeToDispense - volumeDispensed.toInt())
+                timeSpent += ONE_SECOND
                 val timeLeft = (totalTimeToSpend - timeSpent).coerceAtLeast(0)
                 val volumeGivenPercentage = ((volumeDispensed / volumeToDispense) * 100).toInt()
                 val volumeLeftPercentage = (100 - volumeGivenPercentage)
-                batteryPercentage = volumeLeftPercentage
-
+                batteryPercentage = 100 - (volumeGivenPercentage/2)
                 val updatedInfusion = RealtimeInfusion(
                     "100",
                     "start",
@@ -72,7 +75,7 @@ class InfusionDetailsViewModel @Inject constructor(
                     timeLeft.toString(),
                     volumeDispensed.toInt().toString(),
                     volumeGivenPercentage.toString(),
-                    volumeLeft.toInt().toString(),
+                    volumeLeft.toString(),
                     volumeLeftPercentage.toString(),
                     timeSpent.toString(),
                     volumeToDispense.toString(),
@@ -107,7 +110,8 @@ class InfusionDetailsViewModel @Inject constructor(
         val title = "Infusion Alert"
         val message = """
             Hello, The content of the infusion with label $deviceId is ${currentInfusion.volumeGivenPercent}% 
-            done. Click the notification to see more. 
+            done. The infusion in ${DateUtils.formatElapsedTime(currentInfusion.timeRemaining!!.toLong() / 1000)}.
+            Click the notification to see more. 
         """.trimIndent()
         NotificationData(deviceId, infusionId, message, title)
         viewModelScope.launch {
@@ -115,7 +119,7 @@ class InfusionDetailsViewModel @Inject constructor(
                 is Result.Success -> {
                     sendNotification(
                         NotificationPayload(
-                            result.data,
+                            result.data.token!!,
                             NotificationData(deviceId, infusionId, message, title)
                         )
                     )
@@ -139,10 +143,18 @@ class InfusionDetailsViewModel @Inject constructor(
     }
 
     fun stopSimulation() {
-        if ((::simulationScope.isInitialized) && simulationScope.isActive) simulationScope.cancel()
+        if ((::simulationScope.isInitialized) && simulationScope.isActive){
+            Timber.d("About to cancel simulation")
+            simulationScope.cancel()
+        }
     }
 
-    private suspend fun subscribeToRealTimeInfusion(infusionDetails: InfusionDetails) {
+    override fun onCleared() {
+        super.onCleared()
+        stopSimulation()
+    }
+
+    fun subscribeToRealTimeInfusion(infusionDetails: InfusionDetails) {
         viewModelScope.launch {
             _realtimeInfusion.value = infusionDetails.realtimeInfusion //As start
             firebaseRepository.observeDeviceInfusion(infusionDetails.deviceId).collect {

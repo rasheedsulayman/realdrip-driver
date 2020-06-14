@@ -19,5 +19,13 @@ data class RealtimeInfusion(
     val totalVolume: String? = null, //ml
     val batteryLevelPercentage: String? = null
 
-) : Parcelable
+) : Parcelable {
+
+    override fun toString(): String {
+        return "RealtimeInfusion(\nbatteryDuration=$batteryDuration,\ncontrol=$control,\nflowRate=$flowRate,\n" +
+                "onOperation=$onOperation,\ntimeRemaining=$timeRemaining,\nvolumeGiven=$volumeGiven,\n" +
+                "volumeGivenPercent=$volumeGivenPercent,\nvolumeLeft=$volumeLeft,\nvolumeLeftPercent=$volumeLeftPercent,\n" +
+                "elapsedTime=$elapsedTime,\ntotalVolume=$totalVolume,\nbatteryLevelPercentage=$batteryLevelPercentage\n)"
+    }
+}
 

@@ -1,7 +1,6 @@
 package com.treplabs.android.realdripdriver.utils
 
 import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.request.AuthRequest
-import com.treplabs.android.realdripdriver.realdripdriverapp.data.models.response.Nurse
 import javax.inject.Inject
 
 class PrefsValueHelper @Inject constructor(private val prefsUtils: PrefsUtils) {
@@ -20,8 +19,5 @@ class PrefsValueHelper @Inject constructor(private val prefsUtils: PrefsUtils) {
 
     fun saveAuthRequest(authRequest: AuthRequest) = prefsUtils.putObject(AUTH_REQUEST, authRequest)
     fun getAuthRequest(): AuthRequest = prefsUtils.getPrefAsObject(AUTH_REQUEST)
-
-    fun saveLoggedInUser(nurse: Nurse) = prefsUtils.putObject(LOGGED_IN_USER, nurse)
-    fun getLoggedInUser(): Nurse = prefsUtils.getPrefAsObject(LOGGED_IN_USER)
 
 }

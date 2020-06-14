@@ -7,7 +7,7 @@ object InfusionDataHelper {
     fun getStockInfusion(volumeToDispense: String) = RealtimeInfusion(
             "0",
             "start",
-            "200", // ml/h
+            "900", // ml/h
             true,
             "${60 * 60 * 1000}", //Milliseconds
              "0",
