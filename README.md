@@ -1,7 +1,9 @@
-# RealDrip Android
-The Android client for the [RealDrip device](https://treplabs.co/realdrip). 
-## \[ 🚧 Work in progress 🛠 👷🔧👷‍♀️️🔧️ 🚧 \]
-[![Build Status](https://travis-ci.com/r4sh33d/SlidingUpMenu.svg?token=8TPyvGS2YqpBT3ypdxNc&branch=master)](https://travis-ci.com/r4sh33d/SlidingUpMenu)
+# RealDrip Driver
+
+A companion app to simulate and Actual [RealDrip device](https://treplabs.co/realdrip). See the original [Android client](hhttps://github.com/TREP-LABS/realdrip-android)
+
+[![Build Status](https://travis-ci.org/TREP-LABS/realdrip-android.svg?branch=master)](https://travis-ci.org/TREP-LABS/realdrip-driver-android)
+
 ## Code Formatting
 Code Formatting is done with the gradle spotless plugin, using [ktlint](https://github.com/pinterest/ktlint) as the linter. Other settings for the plugin can be configured in [spotless.gradle](spotless.gradle). To format code, run
 
